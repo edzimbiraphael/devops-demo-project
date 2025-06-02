@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git branch: 'main', url: 'https://github.com/edzimbiraphael/devops-demo-project.git'
+        git branch: 'main', url: 'https://github.com/YOURUSERNAME/devops-demo-project.git'
       }
     }
     stage('Build and Test') {
@@ -44,13 +44,13 @@ pipeline {
     stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "devops-demo-project"
-            GIT_USER_NAME = "edzimbiraphael"
+            GIT_USER_NAME = "YOUR USER NAAME"
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    git config user.email "edzimbiraphael@gmail.com"
-                    git config user.name "edzimbiraphael"
+                    git config user.email "YOUR MAIL"
+                    git config user.name "YOUR USER NAME"
                     sed -i "s/tag: .*/tag: \"${build_version}\"/" helm/app/values.yaml
                     git add helm/app/values.yaml
                     git commit -m "Update deployment image to version ${build_version}"
